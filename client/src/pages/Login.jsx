@@ -54,7 +54,7 @@ const Login = () => {
       value = {formData.password}
       onChange = {e => setFormData({ ...formData, password: e.target.value })}  />
       <input 
-      type = 'submit' />
+      type = 'submit' value="Login" />
       {err && <p>{err}</p>}
     </form>
 
