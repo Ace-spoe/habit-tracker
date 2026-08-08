@@ -12,7 +12,7 @@ const getHabits = async (req,res,next) => {
   
    
      const { userId } = req.userInfo
-     const filter = {userId}
+     const filter = { userId }
      if(req.query.search){
       filter.name = {
         $regex : req.query.search , 
