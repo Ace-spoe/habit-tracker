@@ -45,7 +45,7 @@ const Dashboard = () => {
   }
 }
 
-function handlePrev () {
+  function handlePrev () {
   if(pagination.currentPage > 1) {
     setPage(prev => prev - 1)
   }
@@ -207,8 +207,6 @@ function handlePrev () {
     }
   }
 
-
-
   const habitsList =  habit.map((item) => {
 
     const isCompletedToday = item.completedDates?.some(date => new Date(date).toDateString() === new Date().toDateString())
@@ -285,7 +283,10 @@ function handlePrev () {
         <option value="desc">descending</option>
       </select>
 
-        {habitsList}
+        { habit.length == 0 ? 
+        <p>No Habits registered , click add habit to create one </p>
+        : habitsList}
+
         <input type="button" value="prev" onClick={() => handlePrev()}/>
         <p> Page :{pagination.currentPage} of {pagination.totalPages}</p>
         <input type="button" value="next" onClick={() => handleNext()}/>
@@ -314,9 +315,10 @@ function handlePrev () {
       <input type = 'submit'/>
       {err && <p>{err}</p>}
     </form>
+    
     }
 
-     </div>
+    </div>
     
     
   )
