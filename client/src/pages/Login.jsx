@@ -44,12 +44,12 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit}>
       <input 
-      type = 'email' 
+      type = 'email' placeholder="email"
       required
       value = {formData.email}
       onChange = {e => setFormData({ ...formData, email: e.target.value })}  />
        <input 
-      type = 'password' 
+      type = 'password' placeholder="password" 
       required
       value = {formData.password}
       onChange = {e => setFormData({ ...formData, password: e.target.value })}  />

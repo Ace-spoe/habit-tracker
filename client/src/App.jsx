@@ -9,10 +9,13 @@ import NotFound from './pages/NotFound'
 import HabitDetail from './pages/HabitDetail'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import Nav from './components/Nav'
+
 const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Nav />
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='/login' element={<Login />}/>

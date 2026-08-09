@@ -1,8 +1,9 @@
 import React , { useState , useEffect } from 'react'
-
+import HabitDetail from './HabitDetail'
 
 const Dashboard = () => {
   const [habit, setHabit] = useState([])
+  const [selectedHabit, setSelectedHabit] = useState(null)
   const [err, setErr] = useState('')
   const [loading, setLoading] = useState(true)
   const [toggle, setToggle] = useState(false)
@@ -50,6 +51,10 @@ const Dashboard = () => {
     setPage(prev => prev - 1)
   }
 }
+
+ 
+
+
 
 
   const getHabits = async () => {
@@ -177,6 +182,7 @@ const Dashboard = () => {
     }
     console.log('Editied succesfully')
     getHabits()
+    setToggleForEdit('')
 
     } catch (err) {
       setErr('Unable to connect to the internet')
@@ -207,13 +213,18 @@ const Dashboard = () => {
     }
   }
 
+
+
   const habitsList =  habit.map((item) => {
 
     const isCompletedToday = item.completedDates?.some(date => new Date(date).toDateString() === new Date().toDateString())
 
     return (
     <div key = {item._id}>
-      <p> {item.name} </p> 
+      <p onClick={() => 
+        setSelectedHabit(selectedHabit?._id === item._id ? null : item)}> {item.name} </p>
+      {selectedHabit?._id === item._id && 
+      <HabitDetail habit={selectedHabit} onClose={() => setSelectedHabit(null)} />}
       <input 
         type="button" 
         value={isCompletedToday ? "Done today" : "Complete today"} 
@@ -283,13 +294,18 @@ const Dashboard = () => {
         <option value="desc">descending</option>
       </select>
 
-        { habit.length == 0 ? 
+        { habit.length === 0 ? 
         <p>No Habits registered , click add habit to create one </p>
         : habitsList}
-
-        <input type="button" value="prev" onClick={() => handlePrev()}/>
+        {habit.length !== 0 && 
+        <div>
+          <input type="button" value="prev" onClick={() => handlePrev()}/>
         <p> Page :{pagination.currentPage} of {pagination.totalPages}</p>
         <input type="button" value="next" onClick={() => handleNext()}/>
+        </div>
+        }
+        
+        
         {err && <p>{err}</p>}
       </div>
     

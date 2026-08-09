@@ -52,29 +52,29 @@ const getHabits = async (req,res,next) => {
     next(error)
   }
 }
+// The commented code wasn't being used by the progrsam hence commented. 
+// const getHabitById = async (req,res,next) => {
 
-const getHabitById = async (req,res,next) => {
+//   try{ 
+//     const habitByID = await Habit.findOne({
+//       _id : req.params.id ,
+//       userId : req.userInfo.userId
+//     })
 
-  try{ 
-    const habitByID = await Habit.findOne({
-      _id : req.params.id ,
-      userId : req.userInfo.userId
-    })
+//     if(!habitByID){
+//       return res.status(404).json({
+//         message : 'Habit not found'
+//       })
+//     }
+//     res.json({
+//       message : 'Habit Found',
+//       data : habitByID
+//     })
+//   }catch(error){
+//     next(error)
+//   }
 
-    if(!habitByID){
-      return res.status(404).json({
-        message : 'Habit not found'
-      })
-    }
-    res.json({
-      message : 'Habit Found',
-      data : habitByID
-    })
-  }catch(error){
-    next(error)
-  }
-
-}
+// }
 
 const postHabit =  async (req,res,next) => {
 
@@ -193,7 +193,6 @@ const modifyHabit = async (req,res,next) => {
 
 module.exports = {
     getHabits,
-    getHabitById,
     postHabit,
     deleteHabit,
     changeHabit,
