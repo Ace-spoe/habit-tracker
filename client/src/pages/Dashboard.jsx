@@ -3,7 +3,7 @@ import HabitDetail from './HabitDetail'
 
 const Dashboard = () => {
   const [habit, setHabit] = useState([])
-  const [selectedHabit, setSelectedHabit] = useState(null)
+  const [selectedHabitId, setSelectedHabitId] = useState(null)
   const [err, setErr] = useState('')
   const [loading, setLoading] = useState(true)
   const [toggle, setToggle] = useState(false)
@@ -214,17 +214,18 @@ const Dashboard = () => {
   }
 
 
-
+  const selectedHabit = habit.find(h => h._id === selectedHabitId)
+  
   const habitsList =  habit.map((item) => {
 
     const isCompletedToday = item.completedDates?.some(date => new Date(date).toDateString() === new Date().toDateString())
 
     return (
-    <div key = {item._id}>
-      <p onClick={() => 
-        setSelectedHabit(selectedHabit?._id === item._id ? null : item)}> {item.name} </p>
-      {selectedHabit?._id === item._id && 
-      <HabitDetail habit={selectedHabit} onClose={() => setSelectedHabit(null)} />}
+     <div key = {item._id}>
+      <p onClick={() => setSelectedHabitId(selectedHabitId === item._id ? null : item._id)}>{item.name}</p>
+
+      {selectedHabitId === item._id && 
+      <HabitDetail habit={selectedHabit} onClose={() =>   setSelectedHabitId(null)} />}
       <input 
         type="button" 
         value={isCompletedToday ? "Done today" : "Complete today"} 

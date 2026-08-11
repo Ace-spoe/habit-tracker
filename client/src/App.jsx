@@ -9,7 +9,9 @@ import NotFound from './pages/NotFound'
 import HabitDetail from './pages/HabitDetail'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import PublicRoute from './components/PublicRoute'
 import Nav from './components/Nav'
+
 
 const App = () => {
   return (
@@ -18,8 +20,8 @@ const App = () => {
         <Nav />
         <Routes>
           <Route path='/' element={<Home />}/>
-          <Route path='/login' element={<Login />}/>
-          <Route path='/register' element={<Register />}/>
+          <Route path='/login' element={<PublicRoute><Login /></PublicRoute>}/>
+          <Route path='/register' element=          {<PublicRoute><Register /></PublicRoute>}/>
           <Route path='/dashboard' element={ <ProtectedRoute><Dashboard /></ProtectedRoute>}/>
           <Route path='/dashboard/habits/:id' element={<ProtectedRoute><HabitDetail /></ProtectedRoute>}/>
           <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>}/>

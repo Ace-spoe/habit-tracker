@@ -5,6 +5,20 @@ import { Link , useNavigate} from 'react-router-dom'
 const Nav = () => {
  const { user , logout } = useAuth()
  const navigate = useNavigate()
+
+ const handleLogout = async () => {
+  try {
+    await fetch('http://localhost:3000/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
+  } catch (err) {
+    console.log('Logout request failed:', err)
+  }
+  logout()
+  navigate('/login')
+}
+
  if (!user){
     return (<div>
             <Link to = "/register">Register </Link>
@@ -16,10 +30,7 @@ const Nav = () => {
         return (<div>
             <Link to = "/dashboard">Dashboard</Link>
             <Link to = "/profile">Profile</Link>
-            <button onClick = {() => {
-                logout() 
-                navigate('/login')
-                }}>Logout</button>
+            <button onClick = {handleLogout}>Logout</button>
         </div>)
     }
 }

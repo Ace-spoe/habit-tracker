@@ -6,10 +6,12 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     oldPassword : '' ,  newPassword : '' , confirmNewPassword : ''
   })
+  const [loading, setLoading] = useState(false)
   const [err, setErr] = useState('')
-  const { updateUser } = useAuth()
+  const { updateUser , user } = useAuth()
   const [imageURL , setImageURL] = useState('')
   const [communication , setCommunication] = useState('')
+
   const handleUploadProfilePic = async () => {
     try {
      const formData = new FormData()
@@ -18,6 +20,7 @@ const Profile = () => {
       setErr('Please select an image to upload')
       return console.log('Select an image')
      }
+     setLoading(true)
 
     formData.append('profilePicture' , selectedFile)
     const res = await fetch('http://localhost:3000/api/user/profile-picture', {
@@ -37,18 +40,22 @@ const Profile = () => {
     setImageURL(URL.createObjectURL(selectedFile))
     updateUser({ url: response.imageData.secure_url, public_id: response.imageData.public_id })
     setCommunication(response.message)
-    
+    setLoading(false)
       
     } catch (error) {
       setErr(`Unable to connect :'  ${error}`)
+    }
+    finally {
+      setLoading(false)
     }
   }
 
   const handleDeleteProfilePic = async () => {
     try{
+        setLoading(true)
         const res = await fetch('http://localhost:3000/api/user/profile-picture', {
-      method: 'DELETE',
-      credentials: 'include'
+        method: 'DELETE',
+        credentials: 'include'
     })
 
     const response = await res.json() 
@@ -61,9 +68,13 @@ const Profile = () => {
     setImageURL('')
     updateUser({ url: '', public_id: ''})
     setCommunication(response.message)
+    
 
     } catch (error) {
       setErr(`Unable to connect :  ${error}`)
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -97,8 +108,9 @@ const Profile = () => {
   
   return (
     <div>
+      {loading && <p>Loading...</p>}
       <div>
-        <img src={imageURL} alt ="profile-picture"/>
+        <img src={imageURL || user?.profilePicture?.url  ||'/default-avatar.png'} alt="profile-picture" />
         <input type="file" 
         accept='image/*'
         onChange={e => setSelectedFile(e.target.files[0])}

@@ -140,10 +140,23 @@ const logout = (req, res, next) => {
   }
 }
 
+const getMe = async (req, res, next) => {
+  try {
+    const user = await HabitUser.findById(req.userInfo.userId).select('-password')
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' })
+    }
+    res.json({ success: true, userData: user })
+  } catch (err) {
+    next(err)
+  }
+}
+
 
 
 module.exports = {
     register ,
     login ,
-    logout 
+    logout ,
+    getMe
 } 
