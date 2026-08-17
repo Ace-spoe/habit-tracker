@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import HabitDetail from './HabitDetail'
+import API_URL from '../api/config';
 
 // SVG Icons
 const SearchIcon = () => (
@@ -107,7 +108,7 @@ const Dashboard = () => {
       params.append('page', page)
       params.append('limit', limit)
 
-      const res = await fetch(`http://localhost:3000/api/habits?${params.toString()}`, {
+      const res = await fetch(`${API_URL}/api/habits?${params.toString()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -143,7 +144,7 @@ const Dashboard = () => {
     e.preventDefault()
     try {
       setErr('')
-      const res = await fetch("http://localhost:3000/api/habits", {
+      const res = await fetch(`${API_URL}/api/habits`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -170,7 +171,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     try {
       setErr('')
-      const res = await fetch(`http://localhost:3000/api/habits/${id}`, {
+      const res = await fetch(`${API_URL}/api/habits/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -193,7 +194,7 @@ const Dashboard = () => {
     e.preventDefault()
     try {
       setErr('')
-      const res = await fetch(`http://localhost:3000/api/habits/${id}`, {
+      const res = await fetch(`${API_URL}/api/habits/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -219,7 +220,7 @@ const Dashboard = () => {
   const handleComplete = async (id) => {
     try {
       setErr('')
-      const res = await fetch(`http://localhost:3000/api/habits/${id}/complete`, {
+      const res = await fetch(`${API_URL}/api/habits/${id}/complete`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

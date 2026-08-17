@@ -1,6 +1,8 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Link, useNavigate , useLocation} from 'react-router-dom'
+import API_URL from '../api/config';
+
 
 // Custom SVG Logo Icon
 const LogoIcon = () => (
@@ -16,7 +18,7 @@ const Nav = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:3000/api/auth/logout', {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       })

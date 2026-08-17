@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { motion, AnimatePresence } from 'framer-motion'
+import API_URL from '../api/config';
 
 // SVG Icons
 const CameraIcon = () => (
@@ -70,7 +71,7 @@ const Profile = () => {
       const data = new FormData();
       data.append('profilePicture', file);
 
-      const res = await fetch('http://localhost:3000/api/user/profile-picture', {
+      const res = await fetch(`${API_URL}/api/user/profile-picture`, {
         method: 'PATCH',
         credentials: 'include',
         body: data
@@ -99,7 +100,7 @@ const Profile = () => {
       setCommunication('');
       setLoading(true);
 
-      const res = await fetch('http://localhost:3000/api/user/profile-picture', {
+      const res = await fetch(`${API_URL}/api/user/profile-picture`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -127,7 +128,7 @@ const Profile = () => {
       setErr('');
       setCommunication('');
 
-      const res = await fetch('http://localhost:3000/api/user/change-password', {
+      const res = await fetch(`${API_URL}/api/user/change-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
